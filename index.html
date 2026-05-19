@@ -1,0 +1,1061 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>考研数学公式库</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+  onload="initKaTeX()"></script>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  :root{
+    --primary:#4a6cf7;--primary-light:#eef0ff;--primary-dark:#3451d1;
+    --bg:#f7f8fc;--surface:#fff;--border:#e5e7ef;--text:#222;--text2:#666;--text3:#aaa;
+    --success:#22c55e;--danger:#ef4444;--warn:#f59e0b;--info:#3b82f6;
+    --radius:10px;--shadow:0 2px 12px rgba(74,108,247,.08);
+  }
+  body{font-family:'PingFang SC','Microsoft YaHei',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+  /* Layout */
+  .app{display:flex;height:100vh;overflow:hidden}
+  .sidebar{width:220px;background:var(--surface);border-right:1px solid var(--border);display:flex;flex-direction:column;flex-shrink:0}
+  .main{flex:1;overflow-y:auto;display:flex;flex-direction:column}
+  /* Sidebar */
+  .logo{padding:20px 18px 14px;font-size:17px;font-weight:700;color:var(--primary);border-bottom:1px solid var(--border);letter-spacing:.3px}
+  .logo span{font-size:12px;color:var(--text3);font-weight:400;display:block;margin-top:2px}
+  .nav-section{padding:10px 10px 4px;font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:.8px}
+  .nav-item{display:flex;align-items:center;gap:9px;padding:9px 14px;cursor:pointer;border-radius:8px;margin:1px 6px;font-size:14px;color:var(--text2);transition:all .15s}
+  .nav-item:hover{background:var(--primary-light);color:var(--primary)}
+  .nav-item.active{background:var(--primary-light);color:var(--primary);font-weight:500}
+  .nav-item .icon{width:18px;text-align:center;font-size:15px}
+  .nav-badge{margin-left:auto;background:var(--primary);color:#fff;font-size:10px;padding:1px 6px;border-radius:10px}
+  /* Header */
+  .header{background:var(--surface);border-bottom:1px solid var(--border);padding:14px 24px;display:flex;align-items:center;gap:12px;flex-shrink:0}
+  .header h1{font-size:17px;font-weight:600}
+  .header-sub{font-size:13px;color:var(--text3);margin-left:auto}
+  .search-box{flex:1;max-width:340px;position:relative}
+  .search-box input{width:100%;padding:8px 14px 8px 36px;border:1px solid var(--border);border-radius:8px;font-size:13px;outline:none;background:var(--bg);transition:border .15s}
+  .search-box input:focus{border-color:var(--primary);background:#fff}
+  .search-box .si{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--text3);font-size:14px}
+  .btn{padding:8px 16px;border:none;border-radius:8px;cursor:pointer;font-size:13px;font-weight:500;transition:all .15s;display:inline-flex;align-items:center;gap:6px}
+  .btn-primary{background:var(--primary);color:#fff}
+  .btn-primary:hover{background:var(--primary-dark)}
+  .btn-outline{background:transparent;border:1px solid var(--border);color:var(--text2)}
+  .btn-outline:hover{border-color:var(--primary);color:var(--primary)}
+  .btn-sm{padding:5px 12px;font-size:12px}
+  .btn-icon{padding:7px;background:transparent;border:1px solid var(--border);color:var(--text2);border-radius:8px}
+  .btn-icon:hover{border-color:var(--primary);color:var(--primary);background:var(--primary-light)}
+  /* Page panels */
+  .page{display:none;flex-direction:column;flex:1}
+  .page.active{display:flex}
+  .content{padding:20px 24px;flex:1}
+  /* Formula categories */
+  .cat-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px;margin-bottom:24px}
+  .cat-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:14px 12px;cursor:pointer;text-align:center;transition:all .15s}
+  .cat-card:hover,.cat-card.active{border-color:var(--primary);background:var(--primary-light)}
+  .cat-card .cat-icon{font-size:24px;margin-bottom:6px}
+  .cat-card .cat-name{font-size:13px;font-weight:500;color:var(--text)}
+  .cat-card .cat-count{font-size:11px;color:var(--text3);margin-top:2px}
+  /* Formula cards */
+  .formula-grid{display:grid;gap:12px}
+  .formula-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:16px 18px;transition:border .15s;position:relative}
+  .formula-card:hover{border-color:var(--primary)}
+  .formula-card.starred{border-left:3px solid var(--warn)}
+  .fc-header{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:8px}
+  .fc-name{font-size:14px;font-weight:600;color:var(--text)}
+  .fc-tags{display:flex;gap:5px;flex-wrap:wrap;margin-top:4px}
+  .tag{padding:2px 8px;border-radius:20px;font-size:11px;font-weight:500}
+  .tag-blue{background:#dbeafe;color:#1d4ed8}
+  .tag-green{background:#dcfce7;color:#166534}
+  .tag-orange{background:#ffedd5;color:#9a3412}
+  .tag-purple{background:#ede9fe;color:#5b21b6}
+  .tag-pink{background:#fce7f3;color:#9d174d}
+  .fc-formula{padding:10px 14px;background:var(--bg);border-radius:6px;margin:8px 0;overflow-x:auto;font-size:15px}
+  .fc-desc{font-size:13px;color:var(--text2);line-height:1.6;margin-top:6px}
+  .fc-actions{display:flex;gap:6px;margin-top:10px}
+  /* AI Panel */
+  .ai-panel{display:flex;flex-direction:column;height:100%}
+  .ai-messages{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:12px}
+  .ai-msg{max-width:80%;padding:10px 14px;border-radius:12px;font-size:14px;line-height:1.6}
+  .ai-msg.user{background:var(--primary);color:#fff;align-self:flex-end;border-bottom-right-radius:3px}
+  .ai-msg.bot{background:var(--surface);border:1px solid var(--border);align-self:flex-start;border-bottom-left-radius:3px}
+  .ai-input-area{border-top:1px solid var(--border);padding:12px 16px;display:flex;gap:8px;background:var(--surface);flex-shrink:0}
+  .ai-input{flex:1;padding:10px 14px;border:1px solid var(--border);border-radius:10px;font-size:14px;outline:none;resize:none;font-family:inherit}
+  .ai-input:focus{border-color:var(--primary)}
+  .ai-quick{display:flex;gap:6px;flex-wrap:wrap;padding:8px 16px 0;flex-shrink:0}
+  .ai-quick-btn{padding:5px 12px;border:1px solid var(--border);border-radius:20px;font-size:12px;cursor:pointer;background:var(--surface);color:var(--text2);transition:all .15s}
+  .ai-quick-btn:hover{border-color:var(--primary);color:var(--primary);background:var(--primary-light)}
+  /* Questions */
+  .q-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:16px 18px;margin-bottom:12px;cursor:pointer;transition:border .15s}
+  .q-card:hover{border-color:var(--primary)}
+  .q-meta{display:flex;gap:8px;align-items:center;margin-bottom:8px}
+  .q-source{font-size:12px;color:var(--text3)}
+  .q-difficulty{font-size:11px;padding:2px 8px;border-radius:20px}
+  .diff-easy{background:#dcfce7;color:#166534}
+  .diff-mid{background:#ffedd5;color:#9a3412}
+  .diff-hard{background:#fee2e2;color:#991b1b}
+  .q-body{font-size:14px;line-height:1.7;color:var(--text)}
+  .q-footer{display:flex;gap:8px;margin-top:10px;align-items:center}
+  .review-badge{font-size:11px;color:var(--text3)}
+  /* Modal */
+  .modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:1000;align-items:center;justify-content:center}
+  .modal-overlay.open{display:flex}
+  .modal{background:var(--surface);border-radius:14px;padding:24px;width:90%;max-width:600px;max-height:85vh;overflow-y:auto;box-shadow:0 8px 40px rgba(0,0,0,.15)}
+  .modal-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+  .modal-header h2{font-size:17px;font-weight:600}
+  .close-btn{background:none;border:none;font-size:20px;cursor:pointer;color:var(--text3);line-height:1}
+  label{display:block;font-size:13px;font-weight:500;color:var(--text2);margin-bottom:5px;margin-top:12px}
+  input[type=text],textarea,select{width:100%;padding:9px 12px;border:1px solid var(--border);border-radius:8px;font-size:14px;font-family:inherit;outline:none;transition:border .15s}
+  input[type=text]:focus,textarea:focus,select:focus{border-color:var(--primary)}
+  textarea{resize:vertical;min-height:80px}
+  /* Stats bar */
+  .stats-bar{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:20px}
+  .stat-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:14px 16px;text-align:center}
+  .stat-num{font-size:26px;font-weight:700;color:var(--primary)}
+  .stat-label{font-size:12px;color:var(--text3);margin-top:2px}
+  /* Review mode */
+  .review-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:28px;max-width:700px;margin:0 auto;text-align:center}
+  .review-question{font-size:16px;line-height:1.8;text-align:left;margin-bottom:20px}
+  .review-answer{background:var(--bg);border-radius:8px;padding:16px;text-align:left;display:none}
+  .review-answer.show{display:block}
+  /* Empty state */
+  .empty{text-align:center;padding:60px 20px;color:var(--text3)}
+  .empty-icon{font-size:48px;margin-bottom:12px}
+  /* Notification */
+  .toast{position:fixed;bottom:24px;right:24px;background:var(--text);color:#fff;padding:10px 18px;border-radius:10px;font-size:13px;z-index:2000;opacity:0;transform:translateY(8px);transition:all .3s;pointer-events:none}
+  .toast.show{opacity:1;transform:translateY(0)}
+  /* Filter bar */
+  .filter-bar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px;align-items:center}
+  .filter-btn{padding:5px 14px;border:1px solid var(--border);border-radius:20px;font-size:12px;cursor:pointer;background:var(--surface);color:var(--text2);transition:all .15s}
+  .filter-btn:hover,.filter-btn.active{background:var(--primary);color:#fff;border-color:var(--primary)}
+  .section-title{font-size:16px;font-weight:600;margin-bottom:14px;color:var(--text)}
+  .formula-preview{padding:8px 12px;background:var(--bg);border-radius:6px;margin:10px 0;overflow-x:auto;font-size:14px}
+  .ai-loading{display:flex;gap:4px;align-items:center;padding:4px 0}
+  .ai-dot{width:6px;height:6px;background:var(--text3);border-radius:50%;animation:bounce .8s infinite}
+  .ai-dot:nth-child(2){animation-delay:.15s}
+  .ai-dot:nth-child(3){animation-delay:.3s}
+  @keyframes bounce{0%,80%,100%{transform:translateY(0)}40%{transform:translateY(-6px)}}
+  .katex-display{overflow-x:auto;overflow-y:hidden}
+  .highlight{background:rgba(74,108,247,.12);padding:1px 3px;border-radius:3px}
+  .q-img{max-width:100%;border-radius:8px;margin:8px 0;border:1px solid var(--border)}
+  /* Mobile bottom nav */
+  .mobile-nav{display:none;position:fixed;bottom:0;left:0;right:0;background:var(--surface);border-top:1px solid var(--border);z-index:100;padding:6px 0 env(safe-area-inset-bottom,0)}
+  .mobile-nav-items{display:flex;justify-content:space-around;align-items:center}
+  .mobile-nav-item{display:flex;flex-direction:column;align-items:center;gap:2px;padding:6px 12px;cursor:pointer;border-radius:8px;min-width:56px;color:var(--text3);font-size:11px;transition:color .15s}
+  .mobile-nav-item .mn-icon{font-size:20px;line-height:1}
+  .mobile-nav-item.active{color:var(--primary)}
+  @media(max-width:768px){
+    .sidebar{display:none}
+    .mobile-nav{display:block}
+    .app{height:100svh}
+    .main{padding-bottom:60px}
+    .header{padding:10px 14px;gap:8px;flex-wrap:wrap}
+    .header h1{font-size:15px}
+    .search-box{flex:1 1 100%;max-width:100%;order:3}
+    .header-sub{display:none}
+    .content{padding:14px}
+    .stats-bar{grid-template-columns:repeat(2,1fr)}
+    .cat-grid{grid-template-columns:repeat(3,1fr)}
+    .formula-card{padding:12px 14px}
+    .review-card{padding:16px}
+    .modal{padding:18px;width:95%;max-height:90vh}
+    .ai-quick{padding:6px 12px 0;gap:5px}
+    .ai-messages{padding:10px 12px}
+    .ai-input-area{padding:8px 12px}
+    .toast{bottom:72px;right:12px;left:12px;text-align:center}
+    .btn{padding:7px 12px;font-size:13px}
+    .fc-actions{flex-wrap:wrap;gap:4px}
+  }
+</style>
+</head>
+<body>
+
+<div class="app">
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <div class="logo">📐 考研数学
+      <span>公式库 & 题库</span>
+    </div>
+    <div class="nav-section">功能</div>
+    <div class="nav-item active" onclick="showPage('formulas')">
+      <span class="icon">📚</span><span>公式库</span>
+    </div>
+    <div class="nav-item" onclick="showPage('questions')">
+      <span class="icon">📝</span><span>我的题库</span>
+      <span class="nav-badge" id="qBadge">0</span>
+    </div>
+    <div class="nav-item" onclick="showPage('review')">
+      <span class="icon">🔁</span><span>复习模式</span>
+    </div>
+    <div class="nav-item" onclick="showPage('ai')">
+      <span class="icon">🤖</span><span>AI 助手</span>
+    </div>
+    <div style="flex:1"></div>
+    <div class="nav-section">设置</div>
+    <div class="nav-item" onclick="showPage('settings')">
+      <span class="icon">⚙️</span><span>AI 设置</span>
+    </div>
+  </div>
+
+  <!-- Main -->
+  <div class="main">
+
+    <!-- Formulas Page -->
+    <div class="page active" id="page-formulas">
+      <div class="header">
+        <h1>📚 公式库</h1>
+        <div class="search-box">
+          <span class="si">🔍</span>
+          <input type="text" id="formulaSearch" placeholder="搜索公式名称或关键词…" oninput="filterFormulas()">
+        </div>
+        <button class="btn btn-primary" onclick="openModal('addFormula')">＋ 添加公式</button>
+        <span class="header-sub" id="formulaCount"></span>
+      </div>
+      <div class="content">
+        <div class="cat-grid" id="catGrid"></div>
+        <div class="filter-bar" id="filterBar">
+          <span style="font-size:13px;color:var(--text2);margin-right:4px">标签筛选：</span>
+        </div>
+        <div class="section-title" id="formulaListTitle">全部公式</div>
+        <div class="formula-grid" id="formulaList"></div>
+      </div>
+    </div>
+
+    <!-- Questions Page -->
+    <div class="page" id="page-questions">
+      <div class="header">
+        <h1>📝 我的题库</h1>
+        <div class="search-box">
+          <span class="si">🔍</span>
+          <input type="text" id="qSearch" placeholder="搜索题目内容或标签…" oninput="filterQuestions()">
+        </div>
+        <button class="btn btn-primary" onclick="openModal('addQuestion')">＋ 添加题目</button>
+      </div>
+      <div class="content">
+        <div class="stats-bar" id="statsBar"></div>
+        <div class="filter-bar" id="qFilterBar">
+          <button class="filter-btn active" onclick="setQFilter('all',this)">全部</button>
+          <button class="filter-btn" onclick="setQFilter('easy',this)">简单</button>
+          <button class="filter-btn" onclick="setQFilter('medium',this)">中等</button>
+          <button class="filter-btn" onclick="setQFilter('hard',this)">困难</button>
+          <button class="filter-btn" onclick="setQFilter('starred',this)">⭐ 收藏</button>
+        </div>
+        <div id="questionList"></div>
+      </div>
+    </div>
+
+    <!-- Review Page -->
+    <div class="page" id="page-review">
+      <div class="header">
+        <h1>🔁 复习模式</h1>
+        <span class="header-sub" id="reviewProgress"></span>
+      </div>
+      <div class="content" style="display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:400px">
+        <div id="reviewArea"></div>
+      </div>
+    </div>
+
+    <!-- AI Page -->
+    <div class="page" id="page-ai">
+      <div class="header">
+        <h1>🤖 AI 助手</h1>
+        <span class="header-sub">可询问公式推导、方法技巧、自动整理公式</span>
+      </div>
+      <div class="ai-panel">
+        <div class="ai-quick" id="aiQuickBtns">
+          <span class="ai-quick-btn" onclick="askAI('帮我整理所有三角函数的积分公式')">三角积分汇总</span>
+          <span class="ai-quick-btn" onclick="askAI('常见等价无穷小有哪些？')">等价无穷小</span>
+          <span class="ai-quick-btn" onclick="askAI('泰勒展开常用公式有哪些？')">泰勒展开</span>
+          <span class="ai-quick-btn" onclick="askAI('分部积分法的公式和使用技巧')">分部积分</span>
+          <span class="ai-quick-btn" onclick="askAI('常见微分方程解法总结')">微分方程</span>
+          <span class="ai-quick-btn" onclick="askAI('重要极限公式')">重要极限</span>
+        </div>
+        <div class="ai-messages" id="aiMessages">
+          <div class="ai-msg bot">
+            👋 你好！我是你的考研数学 AI 助手。<br><br>
+            你可以问我：<br>
+            • 查询或解释某个公式<br>
+            • 推导公式的过程<br>
+            • 某类题目的解题方法<br>
+            • 帮我整理某类公式并自动添加到公式库<br><br>
+            ⚙️ 请先在「AI 设置」页面配置你的 API Key。
+          </div>
+        </div>
+        <div class="ai-input-area">
+          <textarea class="ai-input" id="aiInput" rows="1" placeholder="输入问题，如：帮我解释洛必达法则的适用条件…" onkeydown="handleAIKey(event)"></textarea>
+          <button class="btn btn-primary" onclick="sendAIMessage()">发送 ↗</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Settings Page -->
+    <div class="page" id="page-settings">
+      <div class="header">
+        <h1>⚙️ AI 设置</h1>
+      </div>
+      <div class="content">
+        <div style="max-width:540px">
+          <div class="formula-card" style="margin-bottom:16px">
+            <div class="fc-name" style="margin-bottom:10px">🔑 API 配置</div>
+            <label>API 提供商</label>
+            <select id="apiProvider" onchange="updateProviderUI()">
+              <option value="openai">OpenAI (GPT-4/3.5)</option>
+              <option value="deepseek">DeepSeek</option>
+              <option value="moonshot">Moonshot (Kimi)</option>
+              <option value="zhipu">智谱 AI (GLM)</option>
+              <option value="custom">自定义 (兼容 OpenAI 格式)</option>
+            </select>
+            <label>API Key</label>
+            <input type="text" id="apiKey" placeholder="sk-..." >
+            <label id="baseUrlLabel" style="display:none">Base URL</label>
+            <input type="text" id="baseUrl" placeholder="https://api.openai.com/v1" style="display:none">
+            <label>模型名称</label>
+            <input type="text" id="modelName" placeholder="gpt-4o-mini">
+            <div style="margin-top:16px;display:flex;gap:8px">
+              <button class="btn btn-primary" onclick="saveSettings()">保存设置</button>
+              <button class="btn btn-outline" onclick="testAPI()">测试连接</button>
+            </div>
+          </div>
+          <div class="formula-card">
+            <div class="fc-name" style="margin-bottom:10px">📊 数据管理</div>
+            <p style="font-size:13px;color:var(--text2);margin-bottom:12px">所有数据存储在浏览器本地（localStorage）</p>
+            <div style="display:flex;gap:8px;flex-wrap:wrap">
+              <button class="btn btn-outline btn-sm" onclick="exportData()">📤 导出数据</button>
+              <button class="btn btn-outline btn-sm" onclick="document.getElementById('importFile').click()">📥 导入数据</button>
+              <button class="btn btn-outline btn-sm" onclick="resetToDefault()">🔄 恢复默认公式</button>
+              <input type="file" id="importFile" accept=".json" style="display:none" onchange="importData(event)">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Modals -->
+<div class="modal-overlay" id="modal-addFormula">
+  <div class="modal">
+    <div class="modal-header">
+      <h2>添加公式</h2>
+      <button class="close-btn" onclick="closeModal('addFormula')">×</button>
+    </div>
+    <label>公式名称 *</label>
+    <input type="text" id="f-name" placeholder="如：分部积分公式">
+    <label>分类 *</label>
+    <select id="f-category">
+      <option value="derivative">导数公式</option>
+      <option value="integral">不定积分</option>
+      <option value="definite">定积分</option>
+      <option value="limit">极限公式</option>
+      <option value="equivalent">等价无穷小</option>
+      <option value="series">级数</option>
+      <option value="ode">微分方程</option>
+      <option value="multivar">多元函数</option>
+      <option value="other">其他</option>
+    </select>
+    <label>LaTeX 公式 *（使用 \(...\) 或 \[...\] 包裹）</label>
+    <textarea id="f-latex" placeholder="如：\[ \int u\,dv = uv - \int v\,du \]" oninput="previewFormula()"></textarea>
+    <div id="f-preview" style="min-height:40px"></div>
+    <label>描述说明</label>
+    <textarea id="f-desc" placeholder="公式的适用条件、注意事项等"></textarea>
+    <label>标签（逗号分隔）</label>
+    <input type="text" id="f-tags" placeholder="积分,分部,技巧">
+    <div style="margin-top:16px;display:flex;gap:8px">
+      <button class="btn btn-primary" onclick="saveFormula()">保存</button>
+      <button class="btn btn-outline" onclick="closeModal('addFormula')">取消</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modal-addQuestion">
+  <div class="modal">
+    <div class="modal-header">
+      <h2>添加题目</h2>
+      <button class="close-btn" onclick="closeModal('addQuestion')">×</button>
+    </div>
+    <label>题目来源</label>
+    <input type="text" id="q-source" placeholder="如：2023年全国一卷数学第14题">
+    <label>难度</label>
+    <select id="q-difficulty">
+      <option value="easy">简单</option>
+      <option value="medium">中等</option>
+      <option value="hard">困难</option>
+    </select>
+    <label>题目内容 *（支持 LaTeX）</label>
+    <textarea id="q-body" rows="4" placeholder="输入题目，公式用 \(...\) 或 \[...\] 包裹" oninput="previewQuestion()"></textarea>
+    <div id="q-preview" style="min-height:40px"></div>
+    <label>答案/解析</label>
+    <textarea id="q-answer" rows="4" placeholder="输入解题过程和答案"></textarea>
+    <label>上传图片（可选）</label>
+    <input type="file" id="q-image" accept="image/*">
+    <label>标签（逗号分隔）</label>
+    <input type="text" id="q-tags" placeholder="积分,定积分,换元">
+    <label>笔记</label>
+    <textarea id="q-notes" rows="2" placeholder="个人备注，如：第一次做错了，需复习换元积分"></textarea>
+    <div style="margin-top:16px;display:flex;gap:8px">
+      <button class="btn btn-primary" onclick="saveQuestion()">保存</button>
+      <button class="btn btn-outline" onclick="closeModal('addQuestion')">取消</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modal-viewFormula">
+  <div class="modal">
+    <div class="modal-header">
+      <h2 id="vf-title"></h2>
+      <button class="close-btn" onclick="closeModal('viewFormula')">×</button>
+    </div>
+    <div id="vf-body"></div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modal-viewQuestion">
+  <div class="modal">
+    <div class="modal-header">
+      <h2 id="vq-title"></h2>
+      <button class="close-btn" onclick="closeModal('viewQuestion')">×</button>
+    </div>
+    <div id="vq-body"></div>
+  </div>
+</div>
+
+<div class="mobile-nav">
+  <div class="mobile-nav-items">
+    <div class="mobile-nav-item active" id="mn-formulas" onclick="showPage('formulas')">
+      <span class="mn-icon">📚</span><span>公式库</span>
+    </div>
+    <div class="mobile-nav-item" id="mn-questions" onclick="showPage('questions')">
+      <span class="mn-icon">📝</span><span>题库</span>
+    </div>
+    <div class="mobile-nav-item" id="mn-review" onclick="showPage('review')">
+      <span class="mn-icon">🔁</span><span>复习</span>
+    </div>
+    <div class="mobile-nav-item" id="mn-ai" onclick="showPage('ai')">
+      <span class="mn-icon">🤖</span><span>AI</span>
+    </div>
+    <div class="mobile-nav-item" id="mn-settings" onclick="showPage('settings')">
+      <span class="mn-icon">⚙️</span><span>设置</span>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ============ DATA ============
+const CATEGORY_MAP = {
+  derivative:'导数公式', integral:'不定积分', definite:'定积分',
+  limit:'极限公式', equivalent:'等价无穷小', series:'级数',
+  ode:'微分方程', multivar:'多元函数', other:'其他'
+};
+const CATEGORY_ICONS = {
+  derivative:'📈', integral:'∫', definite:'🔢', limit:'→',
+  equivalent:'≈', series:'Σ', ode:'dy', multivar:'∂', other:'📌'
+};
+const TAG_COLORS = ['tag-blue','tag-green','tag-orange','tag-purple','tag-pink'];
+
+let state = {
+  formulas: [], questions: [], settings: {},
+  activeCategory: 'all', activeFormulaTag: 'all',
+  qFilter: 'all', reviewIndex: 0, reviewQueue: [],
+  searchFormula: '', searchQuestion: ''
+};
+
+// ============ DEFAULT DATA ============
+const DEFAULT_FORMULAS = [
+  // 导数
+  {id:'d1',name:'幂函数导数',category:'derivative',latex:'\\( (x^n)\\\'= nx^{n-1} \\)',desc:'n为任意实数',tags:['基础'],starred:false},
+  {id:'d2',name:'指数函数导数',category:'derivative',latex:'\\( (e^x)\\\'= e^x,\\quad (a^x)\\\'= a^x \\ln a \\)',desc:'a>0且a≠1',tags:['基础'],starred:false},
+  {id:'d3',name:'对数函数导数',category:'derivative',latex:'\\( (\\ln x)\\\'= \\dfrac{1}{x},\\quad (\\log_a x)\\\'= \\dfrac{1}{x \\ln a} \\)',desc:'x>0',tags:['基础'],starred:false},
+  {id:'d4',name:'三角函数导数',category:'derivative',latex:'\\( (\\sin x)\\\'= \\cos x,\\quad (\\cos x)\\\'= -\\sin x \\)',desc:'',tags:['三角'],starred:false},
+  {id:'d5',name:'反三角函数导数',category:'derivative',latex:'\\( (\\arcsin x)\\\'= \\dfrac{1}{\\sqrt{1-x^2}},\\quad (\\arctan x)\\\'= \\dfrac{1}{1+x^2} \\)',desc:'',tags:['三角','反函数'],starred:false},
+  {id:'d6',name:'乘积法则',category:'derivative',latex:'\\( (uv)\\\'= u\\\'v + uv\\\' \\)',desc:'两个函数乘积的导数',tags:['法则'],starred:false},
+  {id:'d7',name:'商的求导法则',category:'derivative',latex:'\\( \\left(\\dfrac{u}{v}\\right)\\\'= \\dfrac{u\\\'v - uv\\\'}{v^2} \\)',desc:'v≠0',tags:['法则'],starred:false},
+  {id:'d8',name:'链式法则（复合函数）',category:'derivative',latex:'\\( [f(g(x))]\\\'= f\\\'(g(x)) \\cdot g\\\'(x) \\)',desc:'复合函数求导',tags:['法则','复合'],starred:true},
+  // 不定积分
+  {id:'i1',name:'幂函数积分',category:'integral',latex:'\\[ \\int x^n\\,dx = \\dfrac{x^{n+1}}{n+1} + C \\quad (n \\neq -1) \\]',desc:'',tags:['基础'],starred:false},
+  {id:'i2',name:'指数积分',category:'integral',latex:'\\[ \\int e^x\\,dx = e^x + C,\\quad \\int a^x\\,dx = \\dfrac{a^x}{\\ln a} + C \\]',desc:'',tags:['基础'],starred:false},
+  {id:'i3',name:'三角函数积分',category:'integral',latex:'\\[ \\int \\sin x\\,dx = -\\cos x + C,\\quad \\int \\cos x\\,dx = \\sin x + C \\]',desc:'',tags:['三角'],starred:false},
+  {id:'i4',name:'分部积分',category:'integral',latex:'\\[ \\int u\\,dv = uv - \\int v\\,du \\]',desc:'适用于两类不同函数相乘的积分，常用口诀：反对幂三指',tags:['技巧','分部'],starred:true},
+  {id:'i5',name:'换元积分',category:'integral',latex:'\\[ \\int f(g(x))g\\\'(x)\\,dx = \\int f(u)\\,du \\quad (u=g(x)) \\]',desc:'令 u=g(x) 换元',tags:['技巧','换元'],starred:true},
+  {id:'i6',name:'反三角积分',category:'integral',latex:'\\[ \\int \\dfrac{1}{\\sqrt{1-x^2}}\\,dx = \\arcsin x + C,\\quad \\int \\dfrac{1}{1+x^2}\\,dx = \\arctan x + C \\]',desc:'',tags:['反三角'],starred:false},
+  {id:'i7',name:'含有√(a²-x²)的积分换元',category:'integral',latex:'\\[ \\text{令 } x = a\\sin t,\\quad \\sqrt{a^2-x^2}=a\\cos t \\]',desc:'三角代换，适用于含有√(a²-x²)的情形',tags:['换元','三角代换'],starred:false},
+  // 定积分
+  {id:'di1',name:'牛顿-莱布尼茨公式',category:'definite',latex:'\\[ \\int_a^b f(x)\\,dx = F(b) - F(a) \\]',desc:'F为f的原函数',tags:['基础','重要'],starred:true},
+  {id:'di2',name:'区间可加性',category:'definite',latex:'\\[ \\int_a^b f(x)\\,dx = \\int_a^c f(x)\\,dx + \\int_c^b f(x)\\,dx \\]',desc:'',tags:['性质'],starred:false},
+  {id:'di3',name:'奇偶函数积分',category:'definite',latex:'\\[ \\text{偶函数：}\\int_{-a}^a f(x)\\,dx = 2\\int_0^a f(x)\\,dx \\\\[6pt] \\text{奇函数：}\\int_{-a}^a f(x)\\,dx = 0 \\]',desc:'利用对称区间简化计算',tags:['性质','技巧'],starred:true},
+  {id:'di4',name:'华里士公式（Wallis）',category:'definite',latex:'\\[ \\int_0^{\\pi/2} \\sin^n x\\,dx = \\int_0^{\\pi/2} \\cos^n x\\,dx = \\begin{cases} \\dfrac{(n-1)!!}{n!!}\\cdot\\dfrac{\\pi}{2} & n\\text{偶} \\\\[6pt] \\dfrac{(n-1)!!}{n!!} & n\\text{奇} \\end{cases} \\]',desc:'',tags:['三角','技巧'],starred:false},
+  // 极限
+  {id:'l1',name:'两个重要极限',category:'limit',latex:'\\[ \\lim_{x\\to 0}\\dfrac{\\sin x}{x}=1, \\qquad \\lim_{x\\to \\infty}\\left(1+\\dfrac{1}{x}\\right)^x = e \\]',desc:'考研最常用极限',tags:['重要'],starred:true},
+  {id:'l2',name:'洛必达法则',category:'limit',latex:'\\[ \\lim_{x\\to a}\\dfrac{f(x)}{g(x)}=\\lim_{x\\to a}\\dfrac{f\\\'(x)}{g\\\'(x)} \\]',desc:'适用于 0/0 或 ∞/∞ 型不定式，需满足可导条件',tags:['方法','重要'],starred:true},
+  {id:'l3',name:'夹逼准则',category:'limit',latex:'\\[ \\text{若 } g(x) \\leq f(x) \\leq h(x) \\text{ 且 } \\lim g = \\lim h = A,\\text{ 则 } \\lim f = A \\]',desc:'',tags:['方法'],starred:false},
+  // 等价无穷小
+  {id:'e1',name:'基本等价无穷小（x→0）',category:'equivalent',latex:'\\[ \\sin x \\sim x,\\quad \\tan x \\sim x,\\quad \\arcsin x \\sim x,\\quad \\arctan x \\sim x \\]',desc:'x→0时',tags:['基础','重要'],starred:true},
+  {id:'e2',name:'指数对数等价（x→0）',category:'equivalent',latex:'\\[ e^x-1 \\sim x,\\quad \\ln(1+x) \\sim x,\\quad a^x-1 \\sim x\\ln a \\]',desc:'x→0时',tags:['基础','重要'],starred:true},
+  {id:'e3',name:'幂次等价（x→0）',category:'equivalent',latex:'\\[ 1-\\cos x \\sim \\dfrac{x^2}{2},\\quad (1+x)^\\alpha - 1 \\sim \\alpha x,\\quad \\sqrt[n]{1+x}-1\\sim\\dfrac{x}{n} \\]',desc:'x→0时',tags:['重要'],starred:true},
+  {id:'e4',name:'高阶等价（x→0）',category:'equivalent',latex:'\\[ x - \\sin x \\sim \\dfrac{x^3}{6},\\quad x-\\arctan x \\sim \\dfrac{x^3}{3},\\quad x-\\ln(1+x)\\sim\\dfrac{x^2}{2} \\]',desc:'x→0时，用于分子分母抵消后的进一步化简',tags:['技巧'],starred:false},
+  // 级数
+  {id:'s1',name:'泰勒级数（常用）',category:'series',latex:'\\[ e^x = \\sum_{n=0}^\\infty\\dfrac{x^n}{n!},\\quad \\sin x = \\sum_{n=0}^\\infty\\dfrac{(-1)^n x^{2n+1}}{(2n+1)!} \\]',desc:'',tags:['泰勒','重要'],starred:true},
+  {id:'s2',name:'幂级数收敛半径',category:'series',latex:'\\[ R = \\dfrac{1}{\\limsup_{n\\to\\infty}\\sqrt[n]{|a_n|}} = \\lim_{n\\to\\infty}\\left|\\dfrac{a_n}{a_{n+1}}\\right| \\]',desc:'比值法或根值法求收敛半径',tags:['方法'],starred:false},
+  // 微分方程
+  {id:'o1',name:'一阶线性ODE通解',category:'ode',latex:'\\[ y\\\'+ P(x)y = Q(x),\\quad y = e^{-\\int P\\,dx}\\left(\\int Q e^{\\int P\\,dx}\\,dx + C\\right) \\]',desc:'',tags:['一阶','重要'],starred:true},
+  {id:'o2',name:'二阶常系数齐次ODE',category:'ode',latex:'\\[ y\\\'\\\'+ py\\\'+ qy = 0 \\Rightarrow \\text{特征方程 } r^2+pr+q=0 \\]',desc:'根据判别式Δ=p²-4q分三种情况讨论',tags:['二阶','重要'],starred:true},
+  // 多元函数
+  {id:'m1',name:'二重积分换元（极坐标）',category:'multivar',latex:'\\[ \\iint_D f(x,y)\\,dA = \\int_\\alpha^\\beta\\int_0^{r(\\theta)} f(r\\cos\\theta,r\\sin\\theta)\\,r\\,dr\\,d\\theta \\]',desc:'x=rcosθ, y=rsinθ, dxdy=rdrdθ',tags:['积分','换元'],starred:true},
+  {id:'m2',name:'格林公式',category:'multivar',latex:'\\[ \\oint_L P\\,dx + Q\\,dy = \\iint_D\\left(\\dfrac{\\partial Q}{\\partial x}-\\dfrac{\\partial P}{\\partial y}\\right)\\,dA \\]',desc:'L为D的正向边界',tags:['积分'],starred:false},
+];
+
+// ============ STORAGE ============
+function load(){
+  try{
+    const f = localStorage.getItem('kaoyan_formulas');
+    const q = localStorage.getItem('kaoyan_questions');
+    const s = localStorage.getItem('kaoyan_settings');
+    state.formulas = f ? JSON.parse(f) : JSON.parse(JSON.stringify(DEFAULT_FORMULAS));
+    state.questions = q ? JSON.parse(q) : [];
+    state.settings = s ? JSON.parse(s) : {provider:'deepseek',apiKey:'',model:'deepseek-chat',baseUrl:''};
+  }catch(e){ state.formulas=[...DEFAULT_FORMULAS]; state.questions=[]; state.settings={}; }
+}
+function save(){
+  localStorage.setItem('kaoyan_formulas',JSON.stringify(state.formulas));
+  localStorage.setItem('kaoyan_questions',JSON.stringify(state.questions));
+  localStorage.setItem('kaoyan_settings',JSON.stringify(state.settings));
+}
+
+// ============ RENDER ============
+function renderAll(){
+  renderCategories();
+  renderFormulas();
+  renderQuestions();
+  updateBadge();
+  renderStats();
+}
+
+function renderCategories(){
+  const counts = {};
+  state.formulas.forEach(f=>{ counts[f.category]=(counts[f.category]||0)+1; });
+  const el = document.getElementById('catGrid');
+  let html = `<div class="cat-card ${state.activeCategory==='all'?'active':''}" onclick="setCat('all')">
+    <div class="cat-icon">📋</div><div class="cat-name">全部</div>
+    <div class="cat-count">${state.formulas.length} 条</div></div>`;
+  Object.entries(CATEGORY_MAP).forEach(([k,v])=>{
+    html += `<div class="cat-card ${state.activeCategory===k?'active':''}" onclick="setCat('${k}')">
+      <div class="cat-icon">${CATEGORY_ICONS[k]||'📌'}</div>
+      <div class="cat-name">${v}</div>
+      <div class="cat-count">${counts[k]||0} 条</div></div>`;
+  });
+  el.innerHTML = html;
+}
+
+function getFilteredFormulas(){
+  let list = state.formulas;
+  if(state.activeCategory!=='all') list=list.filter(f=>f.category===state.activeCategory);
+  if(state.activeFormulaTag!=='all') list=list.filter(f=>f.tags&&f.tags.includes(state.activeFormulaTag));
+  if(state.searchFormula){
+    const q=state.searchFormula.toLowerCase();
+    list=list.filter(f=>f.name.toLowerCase().includes(q)||(f.desc&&f.desc.toLowerCase().includes(q))||(f.tags&&f.tags.some(t=>t.toLowerCase().includes(q))));
+  }
+  return list;
+}
+
+function renderTagFilter(){
+  const allTags = [...new Set(state.formulas.flatMap(f=>f.tags||[]))].sort();
+  const bar = document.getElementById('filterBar');
+  let html = '<span style="font-size:13px;color:var(--text2);margin-right:4px">标签筛选：</span>';
+  html += `<button class="filter-btn ${state.activeFormulaTag==='all'?'active':''}" onclick="setTagFilter('all')">全部</button>`;
+  allTags.forEach(t=>{
+    html += `<button class="filter-btn ${state.activeFormulaTag===t?'active':''}" onclick="setTagFilter('${t}')">${t}</button>`;
+  });
+  bar.innerHTML = html;
+}
+
+function renderFormulas(){
+  renderTagFilter();
+  const list = getFilteredFormulas();
+  document.getElementById('formulaCount').textContent = `共 ${list.length} 条`;
+  const title = document.getElementById('formulaListTitle');
+  title.textContent = (state.activeCategory==='all'?'全部':CATEGORY_MAP[state.activeCategory]||'公式') + '公式';
+  const el = document.getElementById('formulaList');
+  if(!list.length){
+    el.innerHTML = '<div class="empty"><div class="empty-icon">🔍</div><p>没有找到匹配的公式</p></div>';
+    return;
+  }
+  el.innerHTML = list.map(f=>`
+    <div class="formula-card ${f.starred?'starred':''}" id="fc-${f.id}">
+      <div class="fc-header">
+        <div>
+          <div class="fc-name">${f.name}</div>
+          <div class="fc-tags">${(f.tags||[]).map((t,i)=>`<span class="tag ${TAG_COLORS[i%TAG_COLORS.length]}">${t}</span>`).join('')}
+          <span class="tag tag-blue">${CATEGORY_MAP[f.category]||f.category}</span></div>
+        </div>
+        <button class="btn-icon" title="${f.starred?'取消收藏':'收藏'}" onclick="toggleStar('${f.id}','formula')" style="font-size:16px;padding:4px 6px">${f.starred?'⭐':'☆'}</button>
+      </div>
+      <div class="fc-formula">${f.latex}</div>
+      ${f.desc?`<div class="fc-desc">${f.desc}</div>`:''}
+      <div class="fc-actions">
+        <button class="btn btn-outline btn-sm" onclick="viewFormula('${f.id}')">详情</button>
+        <button class="btn btn-outline btn-sm" onclick="editFormula('${f.id}')">编辑</button>
+        <button class="btn btn-outline btn-sm" style="color:var(--danger)" onclick="deleteFormula('${f.id}')">删除</button>
+      </div>
+    </div>`).join('');
+  renderKaTeX();
+}
+
+function renderQuestions(){
+  let list = state.questions;
+  if(state.qFilter==='starred') list=list.filter(q=>q.starred);
+  else if(state.qFilter!=='all') list=list.filter(q=>q.difficulty===state.qFilter);
+  if(state.searchQuestion){
+    const q=state.searchQuestion.toLowerCase();
+    list=list.filter(item=>item.body.toLowerCase().includes(q)||(item.tags&&item.tags.some(t=>t.toLowerCase().includes(q)))||(item.source&&item.source.toLowerCase().includes(q)));
+  }
+  const el = document.getElementById('questionList');
+  if(!list.length){
+    el.innerHTML = '<div class="empty"><div class="empty-icon">📝</div><p>还没有题目，点击右上角添加</p></div>';
+    return;
+  }
+  el.innerHTML = list.map(q=>`
+    <div class="q-card" onclick="viewQuestion('${q.id}')">
+      <div class="q-meta">
+        <span class="q-source">${q.source||'未知来源'}</span>
+        <span class="q-difficulty diff-${q.difficulty}">${{easy:'简单',medium:'中等',hard:'困难'}[q.difficulty]}</span>
+        ${(q.tags||[]).map((t,i)=>`<span class="tag ${TAG_COLORS[i%TAG_COLORS.length]}">${t}</span>`).join('')}
+        ${q.starred?'<span style="margin-left:auto">⭐</span>':''}
+      </div>
+      <div class="q-body">${q.body.length>200?q.body.substring(0,200)+'…':q.body}</div>
+      ${q.imageData?`<img class="q-img" src="${q.imageData}" alt="题目图片">`:''}
+      <div class="q-footer">
+        <span class="review-badge">复习 ${q.reviewCount||0} 次</span>
+        ${q.lastReview?`<span class="review-badge">• 上次：${q.lastReview}</span>`:''}
+        <button class="btn btn-outline btn-sm" style="margin-left:auto" onclick="event.stopPropagation();quickReview('${q.id}')">复习</button>
+        <button class="btn btn-outline btn-sm" style="color:var(--danger)" onclick="event.stopPropagation();deleteQuestion('${q.id}')">删除</button>
+      </div>
+    </div>`).join('');
+  renderKaTeX();
+}
+
+function renderStats(){
+  const total = state.questions.length;
+  const easy = state.questions.filter(q=>q.difficulty==='easy').length;
+  const hard = state.questions.filter(q=>q.difficulty==='hard').length;
+  const starred = state.questions.filter(q=>q.starred).length;
+  document.getElementById('statsBar').innerHTML = `
+    <div class="stat-card"><div class="stat-num">${total}</div><div class="stat-label">全部题目</div></div>
+    <div class="stat-card"><div class="stat-num" style="color:var(--success)">${easy}</div><div class="stat-label">简单</div></div>
+    <div class="stat-card"><div class="stat-num" style="color:var(--danger)">${hard}</div><div class="stat-label">困难</div></div>
+    <div class="stat-card"><div class="stat-num" style="color:var(--warn)">${starred}</div><div class="stat-label">收藏</div></div>`;
+}
+
+function renderReview(){
+  const queue = state.reviewQueue;
+  const el = document.getElementById('reviewArea');
+  if(!queue.length){
+    el.innerHTML = `<div class="empty">
+      <div class="empty-icon">✅</div>
+      <p>题库为空，请先添加题目</p>
+      <button class="btn btn-primary" style="margin-top:16px" onclick="showPage('questions')">去添加题目</button>
+    </div>`;
+    document.getElementById('reviewProgress').textContent='';
+    return;
+  }
+  const idx = state.reviewIndex % queue.length;
+  const q = queue[idx];
+  document.getElementById('reviewProgress').textContent = `${idx+1} / ${queue.length}`;
+  el.innerHTML = `
+    <div class="review-card">
+      <div class="q-meta" style="justify-content:center;margin-bottom:16px">
+        <span class="q-source">${q.source||'未知来源'}</span>
+        <span class="q-difficulty diff-${q.difficulty}">${{easy:'简单',medium:'中等',hard:'困难'}[q.difficulty]}</span>
+      </div>
+      <div class="review-question" id="rq-body">${q.body}</div>
+      ${q.imageData?`<img class="q-img" src="${q.imageData}" alt="">`:''}
+      <div style="display:flex;gap:10px;justify-content:center;margin:20px 0">
+        <button class="btn btn-outline" onclick="showReviewAnswer()">查看答案</button>
+        <button class="btn btn-outline" onclick="nextReview()">下一题 →</button>
+      </div>
+      <div class="review-answer" id="rq-answer">
+        <strong>解析：</strong><br>${q.answer||'（暂无解析）'}
+        ${q.notes?`<br><br><strong>我的笔记：</strong><br>${q.notes}`:''}
+        <div style="display:flex;gap:8px;margin-top:14px">
+          <button class="btn btn-primary btn-sm" onclick="markReviewed('${q.id}')">✓ 已复习</button>
+          <button class="btn btn-outline btn-sm" onclick="toggleStar('${q.id}','question')">⭐ 收藏</button>
+        </div>
+      </div>
+    </div>`;
+  renderKaTeX();
+}
+
+function renderKaTeX(){
+  if(window.renderMathInElement){
+    document.querySelectorAll('.fc-formula,.review-question,.review-answer,.q-body,#vf-body,#vq-body,#f-preview,#q-preview').forEach(el=>{
+      renderMathInElement(el,{delimiters:[
+        {left:'\\[',right:'\\]',display:true},
+        {left:'\\(',right:'\\)',display:false},
+        {left:'$$',right:'$$',display:true},
+        {left:'$',right:'$',display:false}
+      ],throwOnError:false});
+    });
+  }
+}
+
+function initKaTeX(){
+  renderKaTeX();
+}
+
+// ============ ACTIONS ============
+function showPage(p){
+  document.querySelectorAll('.page').forEach(el=>el.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(el=>el.classList.remove('active'));
+  document.querySelectorAll('.mobile-nav-item').forEach(el=>el.classList.remove('active'));
+  document.getElementById('page-'+p).classList.add('active');
+  const pages=['formulas','questions','review','ai','settings'];
+  const nav = document.querySelectorAll('.nav-item');
+  nav[pages.indexOf(p)]&&nav[pages.indexOf(p)].classList.add('active');
+  const mn = document.getElementById('mn-'+p);
+  if(mn) mn.classList.add('active');
+  if(p==='review'){
+    state.reviewQueue = [...state.questions];
+    state.reviewIndex = 0;
+    renderReview();
+  }
+  if(p==='settings') loadSettingsUI();
+}
+
+function setCat(cat){
+  state.activeCategory = cat;
+  state.activeFormulaTag = 'all';
+  renderCategories();
+  renderFormulas();
+}
+function setTagFilter(tag){
+  state.activeFormulaTag = tag;
+  renderFormulas();
+}
+function filterFormulas(){
+  state.searchFormula = document.getElementById('formulaSearch').value;
+  renderFormulas();
+}
+function setQFilter(f,el){
+  state.qFilter=f;
+  document.querySelectorAll('#qFilterBar .filter-btn').forEach(b=>b.classList.remove('active'));
+  el.classList.add('active');
+  renderQuestions();
+}
+function filterQuestions(){
+  state.searchQuestion = document.getElementById('qSearch').value;
+  renderQuestions();
+}
+
+function toggleStar(id, type){
+  if(type==='formula'){
+    const f = state.formulas.find(f=>f.id===id);
+    if(f){ f.starred=!f.starred; save(); renderFormulas(); }
+  } else {
+    const q = state.questions.find(q=>q.id===id);
+    if(q){ q.starred=!q.starred; save(); renderQuestions(); renderStats(); }
+  }
+}
+
+function updateBadge(){
+  document.getElementById('qBadge').textContent = state.questions.length;
+}
+
+// Formula CRUD
+function openModal(id){ document.getElementById('modal-'+id).classList.add('open'); }
+function closeModal(id){ document.getElementById('modal-'+id).classList.remove('open'); }
+
+let editingFormulaId = null;
+function saveFormula(){
+  const name = document.getElementById('f-name').value.trim();
+  const latex = document.getElementById('f-latex').value.trim();
+  const cat = document.getElementById('f-category').value;
+  if(!name||!latex){ showToast('请填写名称和公式'); return; }
+  const tags = document.getElementById('f-tags').value.split(',').map(t=>t.trim()).filter(Boolean);
+  const desc = document.getElementById('f-desc').value.trim();
+  if(editingFormulaId){
+    const f = state.formulas.find(f=>f.id===editingFormulaId);
+    if(f){ Object.assign(f,{name,category:cat,latex,desc,tags}); }
+  } else {
+    state.formulas.push({id:'f'+Date.now(),name,category:cat,latex,desc,tags,starred:false});
+  }
+  save(); closeModal('addFormula'); editingFormulaId=null; renderAll();
+  showToast(editingFormulaId?'公式已更新':'公式已添加');
+}
+function editFormula(id){
+  const f = state.formulas.find(f=>f.id===id);
+  if(!f) return;
+  editingFormulaId = id;
+  document.getElementById('f-name').value = f.name;
+  document.getElementById('f-category').value = f.category;
+  document.getElementById('f-latex').value = f.latex;
+  document.getElementById('f-desc').value = f.desc||'';
+  document.getElementById('f-tags').value = (f.tags||[]).join(',');
+  openModal('addFormula');
+  setTimeout(()=>previewFormula(),100);
+}
+function deleteFormula(id){
+  if(!confirm('确认删除此公式？')) return;
+  state.formulas = state.formulas.filter(f=>f.id!==id);
+  save(); renderAll(); showToast('已删除');
+}
+function viewFormula(id){
+  const f = state.formulas.find(f=>f.id===id);
+  if(!f) return;
+  document.getElementById('vf-title').textContent = f.name;
+  document.getElementById('vf-body').innerHTML = `
+    <div class="fc-tags" style="margin-bottom:10px">${(f.tags||[]).map((t,i)=>`<span class="tag ${TAG_COLORS[i%TAG_COLORS.length]}">${t}</span>`).join('')}
+    <span class="tag tag-blue">${CATEGORY_MAP[f.category]||f.category}</span></div>
+    <div class="fc-formula" style="font-size:17px;padding:16px">${f.latex}</div>
+    ${f.desc?`<p style="font-size:14px;color:var(--text2);margin-top:12px;line-height:1.7">${f.desc}</p>`:''}`;
+  openModal('viewFormula');
+  setTimeout(()=>renderKaTeX(),100);
+}
+function previewFormula(){
+  const el = document.getElementById('f-preview');
+  el.innerHTML = '<div class="formula-preview">'+document.getElementById('f-latex').value+'</div>';
+  setTimeout(()=>renderKaTeX(),50);
+}
+
+// Question CRUD
+let editingQuestionId = null;
+function saveQuestion(){
+  const body = document.getElementById('q-body').value.trim();
+  if(!body){ showToast('请填写题目内容'); return; }
+  const tags = document.getElementById('q-tags').value.split(',').map(t=>t.trim()).filter(Boolean);
+  const processImage = (data)=>{
+    const q = {
+      id: editingQuestionId || 'q'+Date.now(),
+      source: document.getElementById('q-source').value.trim(),
+      difficulty: document.getElementById('q-difficulty').value,
+      body, answer: document.getElementById('q-answer').value.trim(),
+      tags, notes: document.getElementById('q-notes').value.trim(),
+      imageData: data||null, starred:false, reviewCount:0, lastReview:null
+    };
+    if(editingQuestionId){
+      const idx = state.questions.findIndex(x=>x.id===editingQuestionId);
+      if(idx>=0) state.questions[idx]={...state.questions[idx],...q};
+    } else {
+      state.questions.push(q);
+    }
+    save(); closeModal('addQuestion'); editingQuestionId=null; renderAll();
+    showToast('题目已保存');
+  };
+  const imgFile = document.getElementById('q-image').files[0];
+  if(imgFile){
+    const reader = new FileReader();
+    reader.onload = e => processImage(e.target.result);
+    reader.readAsDataURL(imgFile);
+  } else { processImage(null); }
+}
+function viewQuestion(id){
+  const q = state.questions.find(q=>q.id===id);
+  if(!q) return;
+  document.getElementById('vq-title').textContent = q.source||'题目详情';
+  document.getElementById('vq-body').innerHTML = `
+    <div class="q-meta" style="margin-bottom:12px">
+      <span class="q-difficulty diff-${q.difficulty}">${{easy:'简单',medium:'中等',hard:'困难'}[q.difficulty]}</span>
+      ${(q.tags||[]).map((t,i)=>`<span class="tag ${TAG_COLORS[i%TAG_COLORS.length]}">${t}</span>`).join('')}
+    </div>
+    <div style="font-size:15px;line-height:1.8;margin-bottom:14px">${q.body}</div>
+    ${q.imageData?`<img class="q-img" src="${q.imageData}">`:''}
+    ${q.answer?`<details style="margin-top:14px"><summary style="cursor:pointer;font-weight:500;color:var(--primary)">查看解析</summary>
+      <div style="padding:10px;background:var(--bg);border-radius:8px;margin-top:8px;font-size:14px;line-height:1.7">${q.answer}</div></details>`:''}
+    ${q.notes?`<div style="margin-top:12px;padding:10px;background:#fffbeb;border:1px solid #fde68a;border-radius:8px;font-size:13px"><strong>📝 我的笔记：</strong><br>${q.notes}</div>`:''}
+    <div style="margin-top:14px;display:flex;gap:8px">
+      <button class="btn btn-primary btn-sm" onclick="markReviewed('${q.id}');closeModal('viewQuestion')">✓ 已复习</button>
+      <button class="btn btn-outline btn-sm" onclick="toggleStar('${q.id}','question');closeModal('viewQuestion')">${q.starred?'✩ 取消收藏':'⭐ 收藏'}</button>
+    </div>`;
+  openModal('viewQuestion');
+  setTimeout(()=>renderKaTeX(),100);
+}
+function deleteQuestion(id){
+  if(!confirm('确认删除此题目？')) return;
+  state.questions = state.questions.filter(q=>q.id!==id);
+  save(); renderAll(); showToast('已删除');
+}
+function markReviewed(id){
+  const q = state.questions.find(q=>q.id===id);
+  if(q){
+    q.reviewCount=(q.reviewCount||0)+1;
+    q.lastReview=new Date().toLocaleDateString('zh-CN');
+    save(); renderAll(); showToast('已记录复习');
+  }
+}
+function quickReview(id){
+  showPage('review');
+  const idx = state.reviewQueue.findIndex(q=>q.id===id);
+  if(idx>=0){ state.reviewIndex=idx; renderReview(); }
+}
+function showReviewAnswer(){ document.getElementById('rq-answer').classList.add('show'); }
+function nextReview(){
+  state.reviewIndex++;
+  if(state.reviewIndex>=state.reviewQueue.length){ showToast('已是最后一题，从头开始'); state.reviewIndex=0; }
+  renderReview();
+}
+function previewQuestion(){
+  const el = document.getElementById('q-preview');
+  el.innerHTML = '<div class="formula-preview">'+document.getElementById('q-body').value.substring(0,200)+'</div>';
+  setTimeout(()=>renderKaTeX(),50);
+}
+
+// ============ AI ============
+async function sendAIMessage(){
+  const input = document.getElementById('aiInput');
+  const msg = input.value.trim();
+  if(!msg) return;
+  input.value = '';
+  appendAIMsg('user', msg);
+  const loading = appendAIMsg('bot', '<div class="ai-loading"><span class="ai-dot"></span><span class="ai-dot"></span><span class="ai-dot"></span></div>');
+  try{
+    const reply = await callAI(msg);
+    loading.innerHTML = reply;
+    setTimeout(()=>{renderKaTeX();},100);
+  }catch(e){
+    loading.innerHTML = `<span style="color:var(--danger)">❌ ${e.message}</span>`;
+  }
+}
+function askAI(prompt){
+  showPage('ai');
+  document.getElementById('aiInput').value = prompt;
+  setTimeout(()=>sendAIMessage(),100);
+}
+function appendAIMsg(role, content){
+  const msgs = document.getElementById('aiMessages');
+  const div = document.createElement('div');
+  div.className = 'ai-msg '+role;
+  div.innerHTML = content;
+  msgs.appendChild(div);
+  msgs.scrollTop = msgs.scrollHeight;
+  return div;
+}
+function handleAIKey(e){
+  if(e.key==='Enter'&&!e.shiftKey){ e.preventDefault(); sendAIMessage(); }
+}
+
+async function callAI(userMsg){
+  const s = state.settings;
+  if(!s.apiKey) throw new Error('请先在「AI 设置」中配置 API Key');
+  const providerUrls = {
+    openai: 'https://api.openai.com/v1/chat/completions',
+    deepseek: 'https://api.deepseek.com/v1/chat/completions',
+    moonshot: 'https://api.moonshot.cn/v1/chat/completions',
+    zhipu: 'https://open.bigmodel.cn/api/paas/v4/chat/completions',
+    custom: s.baseUrl||'https://api.openai.com/v1/chat/completions'
+  };
+  const url = providerUrls[s.provider||'deepseek'];
+  const model = s.model || 'deepseek-chat';
+  const sys = `你是专业的考研数学辅导助手。回答要精准、简洁，公式使用 LaTeX 格式（行内用 \\(...\\)，块级用 \\[...\\]）。
+如果用户让你整理/列举公式，请用清晰的格式展示，每个公式单独成段。
+如果用户想把公式添加到公式库，在回答末尾加一行："[FORMULA:公式名称|分类|LaTeX公式]"，分类值为：derivative/integral/definite/limit/equivalent/series/ode/multivar/other`;
+  const resp = await fetch(url,{
+    method:'POST',
+    headers:{'Content-Type':'application/json','Authorization':'Bearer '+s.apiKey},
+    body: JSON.stringify({model,messages:[{role:'system',content:sys},{role:'user',content:userMsg}],temperature:0.3,max_tokens:2000})
+  });
+  if(!resp.ok){
+    const err = await resp.json().catch(()=>({error:{message:resp.statusText}}));
+    throw new Error(err.error?.message||'API 请求失败 '+resp.status);
+  }
+  const data = await resp.json();
+  let reply = data.choices?.[0]?.message?.content || '（空回复）';
+  // Auto-add formula
+  const fmatch = reply.match(/\[FORMULA:([^|]+)\|([^|]+)\|([^\]]+)\]/);
+  if(fmatch){
+    reply = reply.replace(fmatch[0],'');
+    const [,name,cat,latex] = fmatch;
+    state.formulas.push({id:'ai'+Date.now(),name:name.trim(),category:cat.trim(),latex:latex.trim(),desc:'由 AI 助手添加',tags:['AI'],starred:false});
+    save(); renderFormulas();
+    reply += `\n\n✅ **已自动添加到公式库：${name.trim()}**`;
+  }
+  return reply.replace(/\n/g,'<br>');
+}
+
+// ============ SETTINGS ============
+function loadSettingsUI(){
+  const s = state.settings;
+  document.getElementById('apiProvider').value = s.provider||'deepseek';
+  document.getElementById('apiKey').value = s.apiKey||'';
+  document.getElementById('modelName').value = s.model||'deepseek-chat';
+  document.getElementById('baseUrl').value = s.baseUrl||'';
+  updateProviderUI();
+}
+function updateProviderUI(){
+  const p = document.getElementById('apiProvider').value;
+  const isCustom = p==='custom';
+  document.getElementById('baseUrlLabel').style.display = isCustom?'block':'none';
+  document.getElementById('baseUrl').style.display = isCustom?'block':'none';
+  const models = {openai:'gpt-4o-mini',deepseek:'deepseek-chat',moonshot:'moonshot-v1-8k',zhipu:'glm-4-flash',custom:''};
+  if(!document.getElementById('modelName').value||Object.values(models).includes(document.getElementById('modelName').value)){
+    document.getElementById('modelName').value = models[p]||'';
+  }
+}
+function saveSettings(){
+  state.settings = {
+    provider: document.getElementById('apiProvider').value,
+    apiKey: document.getElementById('apiKey').value.trim(),
+    model: document.getElementById('modelName').value.trim(),
+    baseUrl: document.getElementById('baseUrl').value.trim()
+  };
+  save(); showToast('设置已保存');
+}
+async function testAPI(){
+  showToast('测试中…');
+  try{
+    const reply = await callAI('回复"连接成功"三个字即可');
+    showToast('✅ 连接成功：'+reply.replace(/<[^>]+>/g,'').substring(0,20));
+  }catch(e){
+    showToast('❌ '+e.message);
+  }
+}
+
+// ============ DATA EXPORT/IMPORT ============
+function exportData(){
+  const data = {formulas:state.formulas,questions:state.questions,exportTime:new Date().toISOString()};
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([JSON.stringify(data,null,2)],{type:'application/json'}));
+  a.download = 'kaoyan-math-'+new Date().toISOString().split('T')[0]+'.json';
+  a.click(); showToast('数据已导出');
+}
+function importData(e){
+  const file = e.target.files[0];
+  if(!file) return;
+  const reader = new FileReader();
+  reader.onload = ev=>{
+    try{
+      const data = JSON.parse(ev.target.result);
+      if(data.formulas) state.formulas = data.formulas;
+      if(data.questions) state.questions = data.questions;
+      save(); renderAll(); showToast('数据导入成功');
+    }catch(err){ showToast('导入失败：格式错误'); }
+  };
+  reader.readAsText(file);
+}
+function resetToDefault(){
+  if(!confirm('将恢复所有默认公式（不影响题目和自定义公式），确认？')) return;
+  const ids = DEFAULT_FORMULAS.map(f=>f.id);
+  state.formulas = state.formulas.filter(f=>!ids.includes(f.id));
+  state.formulas = [...JSON.parse(JSON.stringify(DEFAULT_FORMULAS)), ...state.formulas];
+  save(); renderAll(); showToast('默认公式已恢复');
+}
+
+// ============ TOAST ============
+let toastTimer;
+function showToast(msg){
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(()=>t.classList.remove('show'),2500);
+}
+
+// ============ INIT ============
+window.onclick = e=>{
+  if(e.target.classList.contains('modal-overlay')) e.target.classList.remove('open');
+};
+load();
+renderAll();
+loadSettingsUI();
+</script>
+</body>
+</html>
