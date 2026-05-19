@@ -110,6 +110,7 @@ textarea{resize:vertical;min-height:80px}
 .section-title{font-size:16px;font-weight:600;margin-bottom:14px;color:var(--text)}
 .formula-preview{padding:8px 12px;background:var(--bg);border-radius:6px;margin:10px 0;overflow-x:auto;font-size:14px}
 .katex-display{overflow-x:auto;overflow-y:hidden;max-width:100%;text-align:left!important;margin:0!important}
+.katex-display .katex{text-align:left!important}
 .katex{font-size:1.05em}
 .q-img{max-width:100%;border-radius:8px;margin:8px 0;border:1px solid var(--border)}
 .mobile-nav{display:none;position:fixed;bottom:0;left:0;right:0;background:var(--surface);border-top:1px solid var(--border);z-index:100;padding:6px 0 env(safe-area-inset-bottom,0)}
@@ -136,8 +137,9 @@ textarea{resize:vertical;min-height:80px}
   .formula-card{padding:16px 14px;border-radius:12px}
   .fc-header{flex-direction:row;align-items:center;gap:6px;margin-bottom:8px}
   .fc-name{font-size:14px;flex:1}
-  .fc-formula{padding:14px 10px;font-size:16px;background:#f5f6fb;border-radius:10px;margin:10px 0;overflow-x:auto;-webkit-overflow-scrolling:touch;max-width:100%}
-  .katex-display{margin:0!important}
+  .fc-formula{padding:14px 10px;font-size:16px;background:#f5f6fb;border-radius:10px;margin:10px 0;overflow-x:auto;-webkit-overflow-scrolling:touch;max-width:100%;text-align:left}
+  .katex-display{margin:0!important;text-align:left!important}
+  .katex-display .katex{text-align:left!important}
   .fc-actions{flex-wrap:nowrap;gap:6px;margin-top:10px}
   .fc-tags{gap:4px;margin-top:4px}
   .tag{font-size:9px;padding:1px 5px}
@@ -155,7 +157,8 @@ textarea{resize:vertical;min-height:80px}
   .q-card{padding:12px}
   .q-body{font-size:13px}
   .katex{font-size:1em!important}
-  .katex-display{margin:.6em 0!important;overflow-x:auto}
+  .katex-display{margin:.6em 0!important;overflow-x:auto;text-align:left!important}
+  .katex-display .katex{text-align:left!important}
   .mobile-nav-item{padding:5px 8px;min-width:48px;font-size:10px}
   .mobile-nav-item .mn-icon{font-size:18px}
   .section-title{font-size:15px;margin-bottom:10px}
