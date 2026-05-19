@@ -34,9 +34,9 @@ body{font-family:'PingFang SC','Microsoft YaHei',sans-serif;background:var(--bg)
 .header h1{font-size:17px;font-weight:600;white-space:nowrap}
 .header-sub{font-size:13px;color:var(--text3);margin-left:auto}
 .search-box{flex:1;max-width:340px;position:relative}
-.search-box input{width:100%;padding:8px 14px 8px 36px;border:1px solid var(--border);border-radius:8px;font-size:13px;outline:none;background:var(--bg)}
+.search-box input{width:100%;padding:8px 14px 8px 40px;border:1px solid var(--border);border-radius:8px;font-size:13px;outline:none;background:var(--bg)}
 .search-box input:focus{border-color:var(--primary);background:#fff}
-.search-box .si{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--text3);font-size:14px}
+.search-box .si{position:absolute;left:13px;top:50%;transform:translateY(-50%);color:var(--text3);font-size:15px;pointer-events:none}
 .btn{padding:8px 16px;border:none;border-radius:8px;cursor:pointer;font-size:13px;font-weight:500;transition:all .15s;display:inline-flex;align-items:center;gap:6px}
 .btn-primary{background:var(--primary);color:#fff}
 .btn-primary:hover{background:var(--primary-dark)}
@@ -641,9 +641,10 @@ function renderReview(){
 }
 
 function renderKaTeX(){
-  if(window.renderMathInElement){document.querySelectorAll('.fc-formula,.review-question,.review-answer,.q-body,#vf-body,#vq-body,#f-preview,#q-preview').forEach(el=>{renderMathInElement(el,{delimiters:[{left:'\\\\[',right:'\\\\]',display:true},{left:'\\\\(',right:'\\\\)',display:false},{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}],throwOnError:false});});}
+  if(!window.renderMathInElement)return;
+  try{document.querySelectorAll('.fc-formula,.review-question,.review-answer,.q-body,#vf-body,#vq-body,#f-preview,#q-preview').forEach(el=>{renderMathInElement(el,{delimiters:[{left:'\\[',right:'\\]',display:true},{left:'\\(',right:'\\)',display:false},{left:'$$',right:'$$',display:true}],throwOnError:false,ignoredTags:['script','noscript','style','textarea','option','pre']});});}catch(e){console.warn('KaTeX render error:',e);}
 }
-function initKaTeX(){renderKaTeX();}
+function initKaTeX(){try{renderKaTeX();}catch(e){console.warn('initKaTeX error:',e);}}
 
 // ============ 操作 ============
 const PAGES=['formulas','questions','review','settings'];
