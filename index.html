@@ -34,9 +34,9 @@ body{font-family:'PingFang SC','Microsoft YaHei',sans-serif;background:var(--bg)
 .header h1{font-size:17px;font-weight:600;white-space:nowrap}
 .header-sub{font-size:13px;color:var(--text3);margin-left:auto}
 .search-box{flex:1;max-width:340px;position:relative}
-.search-box input{width:100%;padding:8px 14px 8px 40px;border:1px solid var(--border);border-radius:8px;font-size:13px;outline:none;background:var(--bg)}
+.search-box input{width:100%;padding:8px 14px 8px 44px;border:1px solid var(--border);border-radius:8px;font-size:13px;outline:none;background:var(--bg)}
 .search-box input:focus{border-color:var(--primary);background:#fff}
-.search-box .si{position:absolute;left:13px;top:50%;transform:translateY(-50%);color:var(--text3);font-size:15px;pointer-events:none}
+.search-box .si{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--text3);font-size:14px;pointer-events:none;z-index:1}
 .btn{padding:8px 16px;border:none;border-radius:8px;cursor:pointer;font-size:13px;font-weight:500;transition:all .15s;display:inline-flex;align-items:center;gap:6px}
 .btn-primary{background:var(--primary);color:#fff}
 .btn-primary:hover{background:var(--primary-dark)}
@@ -566,7 +566,7 @@ function getFilteredFormulas(){
     else{const subs=(SUB_CATS[state.activeCategory]||[]).map(c=>c.id);list=list.filter(f=>subs.includes(f.category));}
   }
   if(state.activeTag!=='all')list=list.filter(f=>f.tags&&f.tags.includes(state.activeTag));
-  if(state.searchFormula){const q=state.searchFormula.toLowerCase();list=list.filter(f=>f.name.toLowerCase().includes(q)||(f.desc&&f.desc.toLowerCase().includes(q))||(f.tags&&f.tags.some(t=>t.toLowerCase().includes(q)));}
+  if(state.searchFormula){const q=state.searchFormula.toLowerCase();list=list.filter(f=>f.name.toLowerCase().includes(q)||(f.desc&&f.desc.toLowerCase().includes(q))||(f.tags&&f.tags.some(t=>t.toLowerCase().includes(q))));}
   return list;
 }
 
