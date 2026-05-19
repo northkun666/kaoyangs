@@ -68,7 +68,7 @@ body{font-family:'PingFang SC','Microsoft YaHei',sans-serif;background:var(--bg)
 .tag-orange{background:#ffedd5;color:#9a3412}
 .tag-purple{background:#ede9fe;color:#5b21b6}
 .tag-pink{background:#fce7f3;color:#9d174d}
-.fc-formula{padding:14px 16px;background:#f8f9fc;border-radius:8px;margin:8px 0;overflow-x:auto;font-size:16px}
+.fc-formula{padding:14px 16px;background:#f8f9fc;border-radius:8px;margin:8px 0;overflow-x:auto;font-size:16px;text-align:left;max-width:100%}
 .fc-desc{font-size:12px;color:var(--text2);line-height:1.6;margin-top:4px}
 .fc-actions{display:flex;gap:6px;margin-top:8px}
 .q-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:16px 18px;margin-bottom:12px;cursor:pointer;transition:border .15s}
@@ -109,7 +109,7 @@ textarea{resize:vertical;min-height:80px}
 .filter-btn:hover,.filter-btn.active{background:var(--primary);color:#fff;border-color:var(--primary)}
 .section-title{font-size:16px;font-weight:600;margin-bottom:14px;color:var(--text)}
 .formula-preview{padding:8px 12px;background:var(--bg);border-radius:6px;margin:10px 0;overflow-x:auto;font-size:14px}
-.katex-display{overflow-x:auto;overflow-y:hidden;max-width:100%}
+.katex-display{overflow-x:auto;overflow-y:hidden;max-width:100%;text-align:left!important;margin:0!important}
 .katex{font-size:1.05em}
 .q-img{max-width:100%;border-radius:8px;margin:8px 0;border:1px solid var(--border)}
 .mobile-nav{display:none;position:fixed;bottom:0;left:0;right:0;background:var(--surface);border-top:1px solid var(--border);z-index:100;padding:6px 0 env(safe-area-inset-bottom,0)}
@@ -136,7 +136,8 @@ textarea{resize:vertical;min-height:80px}
   .formula-card{padding:16px 14px;border-radius:12px}
   .fc-header{flex-direction:row;align-items:center;gap:6px;margin-bottom:8px}
   .fc-name{font-size:14px;flex:1}
-  .fc-formula{padding:14px 10px;font-size:16px;background:#f5f6fb;border-radius:10px;margin:10px -4px;overflow-x:auto;-webkit-overflow-scrolling:touch}
+  .fc-formula{padding:14px 10px;font-size:16px;background:#f5f6fb;border-radius:10px;margin:10px 0;overflow-x:auto;-webkit-overflow-scrolling:touch;max-width:100%}
+  .katex-display{margin:0!important}
   .fc-actions{flex-wrap:nowrap;gap:6px;margin-top:10px}
   .fc-tags{gap:4px;margin-top:4px}
   .tag{font-size:9px;padding:1px 5px}
@@ -696,7 +697,7 @@ function editFormula(id){const f=state.formulas.find(f=>f.id===id);if(!f)return;
 function deleteFormula(id){if(!confirm('确认删除？'))return;state.formulas=state.formulas.filter(f=>f.id!==id);save();renderAll();showToast('已删除');}
 function viewFormula(id){const f=state.formulas.find(f=>f.id===id);if(!f)return;
   document.getElementById('vf-title').textContent=f.name;
-  document.getElementById('vf-body').innerHTML=`<div class="fc-tags" style="margin-bottom:10px">${(f.tags||[]).map((t,i)=>`<span class="tag ${TAG_COLORS[i%TAG_COLORS.length]}">${t}</span>`).join('')}<span class="tag tag-blue">${ALL_CATS[f.category]||f.category}</span></div><div class="fc-formula" style="font-size:17px;padding:20px 16px;line-height:2.2">${f.latex}</div>${f.desc?`<p style="font-size:14px;color:var(--text2);margin-top:16px;line-height:1.8">${f.desc}</p>`:''}`;
+  document.getElementById('vf-body').innerHTML=`<div class="fc-tags" style="margin-bottom:10px">${(f.tags||[]).map((t,i)=>`<span class="tag ${TAG_COLORS[i%TAG_COLORS.length]}">${t}</span>`).join('')}<span class="tag tag-blue">${ALL_CATS[f.category]||f.category}</span></div><div class="fc-formula" style="font-size:17px;padding:20px 16px;line-height:2.2;max-width:100%">${f.latex}</div>${f.desc?`<p style="font-size:14px;color:var(--text2);margin-top:16px;line-height:1.8">${f.desc}</p>`:''}`;
   openModal('viewFormula');setTimeout(()=>renderKaTeX(),100);}
 function previewFormula(){document.getElementById('f-preview').innerHTML='<div class="formula-preview">'+document.getElementById('f-latex').value+'</div>';setTimeout(()=>renderKaTeX(),50);}
 
