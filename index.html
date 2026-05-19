@@ -16,7 +16,7 @@
   --success:#10b981;--danger:#ef4444;--warn:#f59e0b;--info:#3b82f6;
   --radius:12px;
 }
-body{font-family:'PingFang SC','Microsoft YaHei',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden}
+body{font-family:'PingFang SC','Microsoft YaHei',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden;-webkit-tap-highlight-color:transparent}
 .app{display:flex;height:100vh;overflow:hidden;max-width:100vw}
 .sidebar{width:220px;background:var(--surface);border-right:1px solid var(--border);display:flex;flex-direction:column;flex-shrink:0;overflow-y:auto}
 .main{flex:1;overflow-y:auto;display:flex;flex-direction:column;min-width:0}
@@ -24,7 +24,7 @@ body{font-family:'PingFang SC','Microsoft YaHei',sans-serif;background:var(--bg)
 .logo span{font-size:12px;color:var(--text3);font-weight:400;display:block;margin-top:2px}
 .nav-section{padding:12px 10px 4px;font-size:11px;color:var(--text3);letter-spacing:.8px;font-weight:500}
 .nav-section.main-sec{padding:14px 10px 4px;font-size:13px;color:var(--primary);font-weight:600}
-.nav-item{display:flex;align-items:center;gap:9px;padding:8px 14px;cursor:pointer;border-radius:8px;margin:1px 6px;font-size:13px;color:var(--text2);transition:all .15s}
+.nav-item{display:flex;align-items:center;gap:9px;padding:8px 14px;cursor:pointer;border-radius:8px;margin:1px 6px;font-size:13px;color:var(--text2);transition:all .2s ease}
 .nav-item:hover{background:var(--primary-light);color:var(--primary)}
 .nav-item.active{background:var(--primary-light);color:var(--primary);font-weight:500}
 .nav-item .icon{width:18px;text-align:center;font-size:14px}
@@ -36,7 +36,8 @@ body{font-family:'PingFang SC','Microsoft YaHei',sans-serif;background:var(--bg)
 .search-box{flex:1;max-width:340px;position:relative}
 .search-box input{width:100%;padding:8px 14px;border:1px solid var(--border);border-radius:8px;font-size:13px;outline:none;background:var(--bg)}
 .search-box input:focus{border-color:var(--primary);background:#fff}
-.btn{padding:8px 16px;border:none;border-radius:8px;cursor:pointer;font-size:13px;font-weight:500;transition:all .15s;display:inline-flex;align-items:center;gap:6px}
+.btn{padding:8px 16px;border:none;border-radius:8px;cursor:pointer;font-size:13px;font-weight:500;transition:all .2s ease;display:inline-flex;align-items:center;gap:6px}
+.btn:active{transform:scale(.96)}
 .btn-primary{background:var(--primary);color:#fff}
 .btn-primary:hover{background:var(--primary-dark)}
 .btn-outline{background:transparent;border:1px solid var(--border);color:var(--text2)}
@@ -45,18 +46,18 @@ body{font-family:'PingFang SC','Microsoft YaHei',sans-serif;background:var(--bg)
 .btn-icon{padding:7px;background:transparent;border:1px solid var(--border);color:var(--text2);border-radius:8px}
 .btn-icon:hover{border-color:var(--primary);color:var(--primary);background:var(--primary-light)}
 .page{display:none;flex-direction:column;flex:1}
-.page.active{display:flex}
+.page.active{display:flex;animation:fadeIn .2s ease}
 .content{padding:20px 24px;flex:1}
 .cat-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:10px;margin-bottom:20px}
-.cat-card{background:linear-gradient(145deg,var(--surface) 0%,#fafbfc 100%);border:1px solid var(--border);border-radius:var(--radius);padding:14px 10px;cursor:pointer;text-align:center;transition:all .15s;box-shadow:0 1px 2px rgba(0,0,0,.03)}
+.cat-card{background:linear-gradient(145deg,var(--surface) 0%,#fafbfc 100%);border:1px solid var(--border);border-radius:var(--radius);padding:14px 10px;cursor:pointer;text-align:center;transition:all .2s ease;box-shadow:0 1px 2px rgba(0,0,0,.03)}
 .cat-card:hover,.cat-card.active{border-color:var(--primary);background:linear-gradient(145deg,var(--primary-light) 0%,#eef0ff 100%);box-shadow:0 2px 8px rgba(99,102,241,.1)}
-.cat-card .cat-icon{font-size:20px;margin-bottom:4px}
+.cat-card .cat-icon{font-size:15px;margin-bottom:3px}
 .cat-card .cat-name{font-size:12px;font-weight:500;color:var(--text)}
 .cat-card .cat-count{font-size:10px;color:var(--text3);margin-top:2px}
 .cat-card.main-cat{background:var(--primary-light);border-color:var(--primary)}
 .cat-card.main-cat .cat-name{color:var(--primary);font-weight:600;font-size:13px}
 .formula-grid{display:grid;gap:10px}
-.formula-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:16px 18px;transition:all .15s;box-shadow:0 1px 3px rgba(0,0,0,.04)}
+.formula-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:16px 18px;transition:all .2s ease;box-shadow:0 1px 3px rgba(0,0,0,.04);animation:fadeUp .25s ease both}
 .formula-card:hover{border-color:var(--primary);box-shadow:0 4px 12px rgba(99,102,241,.08)}
 .formula-card.starred{border-left:3px solid var(--warn)}
 .fc-header{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:6px}
@@ -105,7 +106,7 @@ textarea{resize:vertical;min-height:80px}
 .toast{position:fixed;bottom:24px;right:24px;background:var(--text);color:#fff;padding:10px 18px;border-radius:10px;font-size:13px;z-index:2000;opacity:0;transform:translateY(8px);transition:all .3s;pointer-events:none}
 .toast.show{opacity:1;transform:translateY(0)}
 .filter-bar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px;align-items:center}
-.filter-btn{padding:5px 14px;border:1px solid var(--border);border-radius:20px;font-size:12px;cursor:pointer;background:var(--surface);color:var(--text2);transition:all .15s}
+.filter-btn{padding:5px 14px;border:1px solid var(--border);border-radius:20px;font-size:12px;cursor:pointer;background:var(--surface);color:var(--text2);transition:all .2s ease}
 .filter-btn:hover,.filter-btn.active{background:var(--primary);color:#fff;border-color:var(--primary)}
 .section-title{font-size:16px;font-weight:600;margin-bottom:14px;color:var(--text)}
 .formula-preview{padding:8px 12px;background:var(--bg);border-radius:6px;margin:10px 0;overflow-x:auto;font-size:14px}
@@ -118,6 +119,8 @@ textarea{resize:vertical;min-height:80px}
 .mobile-nav-item{display:flex;flex-direction:column;align-items:center;gap:2px;padding:6px 12px;cursor:pointer;border-radius:8px;min-width:56px;color:var(--text3);font-size:11px;transition:color .15s}
 .mobile-nav-item .mn-icon{font-size:20px;line-height:1}
 .mobile-nav-item.active{color:var(--primary)}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
 @media(max-width:768px){
   .sidebar{display:none}
   .mobile-nav{display:block}
@@ -131,7 +134,7 @@ textarea{resize:vertical;min-height:80px}
   .content{padding:12px}
   .stats-bar{grid-template-columns:repeat(2,1fr);gap:8px}
   .cat-grid{grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:14px}
-  .cat-card{padding:12px 6px;border-radius:10px}
+  .cat-card{padding:12px 6px;border-radius:10px;animation:fadeUp .2s ease both}
   .cat-card .cat-name{font-size:11px}
   .formula-grid{gap:12px}
   .formula-card{padding:16px 14px;border-radius:12px}
@@ -593,9 +596,9 @@ function renderFormulas(){
   else{const sec=SECTIONS.find(s=>s.id===state.activeCategory);title.textContent=sec?sec.name:'公式';}
   const el=document.getElementById('formulaList');
   if(!list.length){el.innerHTML='<div class="empty"><div class="empty-icon">🔍</div><p>没有找到匹配的公式</p></div>';return;}
-  el.innerHTML=list.map(f=>`<div class="formula-card ${f.starred?'starred':''}" id="fc-${f.id}">
+  el.innerHTML=list.map((f,i)=>`<div class="formula-card ${f.starred?'starred':''}" id="fc-${f.id}" style="animation-delay:${Math.min(i*20,200)}ms">
     <div class="fc-header"><div><div class="fc-name">${f.name}</div>
-    <div class="fc-tags">${(f.tags||[]).map((t,i)=>`<span class="tag ${TAG_COLORS[i%TAG_COLORS.length]}">${t}</span>`).join('')}
+    <div class="fc-tags">${(f.tags||[]).map((t,j)=>`<span class="tag ${TAG_COLORS[j%TAG_COLORS.length]}">${t}</span>`).join('')}
     <span class="tag tag-blue">${ALL_CATS[f.category]||f.category}</span></div></div>
     <button class="btn-icon" title="${f.starred?'取消收藏':'收藏'}" onclick="toggleStar('${f.id}','formula')" style="font-size:16px;padding:4px 6px">${f.starred?'⭐':'☆'}</button></div>
     <div class="fc-formula">${f.latex}</div>
@@ -603,7 +606,8 @@ function renderFormulas(){
     <div class="fc-actions"><button class="btn btn-outline btn-sm" onclick="viewFormula('${f.id}')">详情</button>
     <button class="btn btn-outline btn-sm" onclick="editFormula('${f.id}')">编辑</button>
     <button class="btn btn-outline btn-sm" style="color:var(--danger)" onclick="deleteFormula('${f.id}')">删除</button></div></div>`).join('');
-  renderKaTeX();
+  // Use requestAnimationFrame to avoid layout thrashing
+  requestAnimationFrame(()=>renderKaTeX());
 }
 
 function renderQuestions(){
@@ -624,7 +628,7 @@ function renderQuestions(){
     ${q.lastReview?`<span class="review-badge">• ${q.lastReview}</span>`:''}
     <button class="btn btn-outline btn-sm" style="margin-left:auto" onclick="event.stopPropagation();quickReview('${q.id}')">复习</button>
     <button class="btn btn-outline btn-sm" style="color:var(--danger)" onclick="event.stopPropagation();deleteQuestion('${q.id}')">删除</button></div></div>`).join('');
-  renderKaTeX();
+  renderKaTeX('.q-body,.review-question,.review-answer');
 }
 
 function renderStats(){
@@ -642,12 +646,17 @@ function renderReview(){
     <div style="display:flex;gap:10px;justify-content:center;margin:20px 0"><button class="btn btn-outline" onclick="showReviewAnswer()">查看答案</button><button class="btn btn-outline" onclick="nextReview()">下一题 →</button></div>
     <div class="review-answer" id="rq-answer"><strong>解析：</strong><br>${item.answer||'（暂无）'}${item.notes?`<br><br><strong>笔记：</strong><br>${item.notes}`:''}
     <div style="display:flex;gap:8px;margin-top:14px"><button class="btn btn-primary btn-sm" onclick="markReviewed('${item.id}')">✓ 已复习</button><button class="btn btn-outline btn-sm" onclick="toggleStar('${item.id}','question')">⭐ 收藏</button></div></div></div>`;
-  renderKaTeX();
+  renderKaTeX('.review-question,.review-answer');
 }
 
-function renderKaTeX(){
+function renderKaTeX(selector){
   if(!window.renderMathInElement)return;
-  try{document.querySelectorAll('.fc-formula,.review-question,.review-answer,.q-body,#vf-body,#vq-body,#f-preview,#q-preview').forEach(el=>{renderMathInElement(el,{delimiters:[{left:'\\[',right:'\\]',display:true},{left:'\\(',right:'\\)',display:false},{left:'$$',right:'$$',display:true}],throwOnError:false,ignoredTags:['script','noscript','style','textarea','option','pre']});});}catch(e){console.warn('KaTeX render error:',e);}
+  try{
+    const sel=selector||'#formulaList .fc-formula';
+    document.querySelectorAll(sel).forEach(el=>{
+      renderMathInElement(el,{delimiters:[{left:'\\[',right:'\\]',display:true},{left:'\\(',right:'\\)',display:false},{left:'$$',right:'$$',display:true}],throwOnError:false,ignoredTags:['script','noscript','style','textarea','option','pre']});
+    });
+  }catch(e){console.warn('KaTeX render error:',e);}
 }
 function initKaTeX(){try{renderKaTeX();}catch(e){console.warn('initKaTeX error:',e);}}
 
@@ -664,7 +673,7 @@ function showPage(p){
   const mn=document.getElementById('mn-'+p);if(mn)mn.classList.add('active');
   if(p==='review'){state.reviewQueue=[...state.questions];state.reviewIndex=0;renderReview();}
 }
-function setCat(c){state.activeCategory=c;state.activeTag='all';renderCategories();renderFormulas();}
+function setCat(c){state.activeCategory=c;state.activeTag='all';renderCategories();requestAnimationFrame(()=>renderFormulas());}
 function setTagFilter(t){state.activeTag=t;renderFormulas();}
 function filterFormulas(){state.searchFormula=document.getElementById('formulaSearch').value;renderFormulas();}
 function setQFilter(f,el){state.qFilter=f;document.querySelectorAll('#qFilterBar .filter-btn').forEach(b=>b.classList.remove('active'));el.classList.add('active');renderQuestions();}
@@ -701,8 +710,8 @@ function deleteFormula(id){if(!confirm('确认删除？'))return;state.formulas=
 function viewFormula(id){const f=state.formulas.find(f=>f.id===id);if(!f)return;
   document.getElementById('vf-title').textContent=f.name;
   document.getElementById('vf-body').innerHTML=`<div class="fc-tags" style="margin-bottom:10px">${(f.tags||[]).map((t,i)=>`<span class="tag ${TAG_COLORS[i%TAG_COLORS.length]}">${t}</span>`).join('')}<span class="tag tag-blue">${ALL_CATS[f.category]||f.category}</span></div><div class="fc-formula" style="font-size:17px;padding:20px 16px;line-height:2.2;max-width:100%">${f.latex}</div>${f.desc?`<p style="font-size:14px;color:var(--text2);margin-top:16px;line-height:1.8">${f.desc}</p>`:''}`;
-  openModal('viewFormula');setTimeout(()=>renderKaTeX(),100);}
-function previewFormula(){document.getElementById('f-preview').innerHTML='<div class="formula-preview">'+document.getElementById('f-latex').value+'</div>';setTimeout(()=>renderKaTeX(),50);}
+  openModal('viewFormula');setTimeout(()=>renderKaTeX('#vf-body .fc-formula'),100);}
+function previewFormula(){document.getElementById('f-preview').innerHTML='<div class="formula-preview">'+document.getElementById('f-latex').value+'</div>';setTimeout(()=>renderKaTeX('.formula-preview'),50);}
 
 // 题目 CRUD
 let editingQuestionId=null;
@@ -722,13 +731,13 @@ function viewQuestion(id){const q=state.questions.find(q=>q.id===id);if(!q)retur
     ${q.answer?`<details style="margin-top:14px"><summary style="cursor:pointer;font-weight:500;color:var(--primary)">查看解析</summary><div style="padding:10px;background:var(--bg);border-radius:8px;margin-top:8px;font-size:14px;line-height:1.7">${q.answer}</div></details>`:''}
     ${q.notes?`<div style="margin-top:12px;padding:10px;background:#fffbeb;border:1px solid #fde68a;border-radius:8px;font-size:13px"><strong>📝 笔记：</strong>${q.notes}</div>`:''}
     <div style="margin-top:14px;display:flex;gap:8px"><button class="btn btn-primary btn-sm" onclick="markReviewed('${q.id}');closeModal('viewQuestion')">✓ 已复习</button><button class="btn btn-outline btn-sm" onclick="toggleStar('${q.id}','question');closeModal('viewQuestion')">${q.starred?'✩ 取消收藏':'⭐ 收藏'}</button></div>`;
-  openModal('viewQuestion');setTimeout(()=>renderKaTeX(),100);}
+  openModal('viewQuestion');setTimeout(()=>renderKaTeX('#vq-body'),100);}
 function deleteQuestion(id){if(!confirm('确认删除？'))return;state.questions=state.questions.filter(q=>q.id!==id);save();renderAll();showToast('已删除');}
 function markReviewed(id){const q=state.questions.find(q=>q.id===id);if(q){q.reviewCount=(q.reviewCount||0)+1;q.lastReview=new Date().toLocaleDateString('zh-CN');save();renderAll();showToast('已记录');}}
 function quickReview(id){showPage('review');const idx=state.reviewQueue.findIndex(q=>q.id===id);if(idx>=0){state.reviewIndex=idx;renderReview();}}
 function showReviewAnswer(){document.getElementById('rq-answer').classList.add('show');}
 function nextReview(){state.reviewIndex++;if(state.reviewIndex>=state.reviewQueue.length){showToast('最后一题，从头开始');state.reviewIndex=0;}renderReview();}
-function previewQuestion(){document.getElementById('q-preview').innerHTML='<div class="formula-preview">'+document.getElementById('q-body').value.substring(0,200)+'</div>';setTimeout(()=>renderKaTeX(),50);}
+function previewQuestion(){document.getElementById('q-preview').innerHTML='<div class="formula-preview">'+document.getElementById('q-body').value.substring(0,200)+'</div>';setTimeout(()=>renderKaTeX('.formula-preview'),50);}
 
 // 数据管理
 function exportData(){const d={formulas:state.formulas,questions:state.questions,version:2,time:new Date().toISOString()};
