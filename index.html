@@ -110,7 +110,9 @@ textarea{resize:vertical;min-height:80px}
 .section-title{font-size:16px;font-weight:600;margin-bottom:14px;color:var(--text)}
 .formula-preview{padding:8px 12px;background:var(--bg);border-radius:6px;margin:10px 0;overflow-x:auto;font-size:14px}
 .katex-display{overflow-x:auto;overflow-y:hidden;max-width:100%}
-.katex{font-size:1em}
+.katex{font-size:1.05em}
+.katex .base{white-space:normal!important}
+.katex-display>.katex{white-space:normal!important}
 .q-img{max-width:100%;border-radius:8px;margin:8px 0;border:1px solid var(--border)}
 .mobile-nav{display:none;position:fixed;bottom:0;left:0;right:0;background:var(--surface);border-top:1px solid var(--border);z-index:100;padding:6px 0 env(safe-area-inset-bottom,0)}
 .mobile-nav-items{display:flex;justify-content:space-around;align-items:center}
@@ -122,39 +124,43 @@ textarea{resize:vertical;min-height:80px}
   .mobile-nav{display:block}
   .app{height:100svh}
   .main{padding-bottom:60px}
-  .header{padding:10px 12px;gap:8px;flex-wrap:wrap}
-  .header h1{font-size:15px}
-  .search-box{flex:1 1 100%;max-width:100%;order:3}
+  .header{padding:8px 12px;gap:6px;flex-wrap:wrap}
+  .header h1{font-size:15px;flex:1}
+  .search-box{flex:1 1 100%;max-width:100%;order:3;margin-top:2px}
+  .search-box input{padding:7px 12px;font-size:13px}
   .header-sub{display:none}
   .content{padding:12px}
-  .stats-bar{grid-template-columns:repeat(2,1fr)}
-  .cat-grid{grid-template-columns:repeat(3,1fr)}
-  .cat-card{padding:10px 6px}
+  .stats-bar{grid-template-columns:repeat(2,1fr);gap:8px}
+  .cat-grid{grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:14px}
+  .cat-card{padding:12px 6px;border-radius:10px}
   .cat-card .cat-name{font-size:11px}
-  .formula-card{padding:14px}
-  .fc-header{flex-direction:column;gap:4px}
-  .fc-name{font-size:13px}
-  .fc-formula{padding:12px 10px;font-size:15px;overflow-x:auto;-webkit-overflow-scrolling:touch}
-  .fc-actions{flex-wrap:wrap;gap:4px}
-  .fc-tags{gap:3px}
-  .tag{font-size:10px;padding:1px 6px}
+  .formula-grid{gap:12px}
+  .formula-card{padding:16px 14px;border-radius:12px}
+  .fc-header{flex-direction:row;align-items:center;gap:6px;margin-bottom:8px}
+  .fc-name{font-size:14px;flex:1}
+  .fc-formula{padding:14px 10px;font-size:16px;background:#f5f6fb;border-radius:10px;margin:10px -4px;overflow-x:auto;-webkit-overflow-scrolling:touch}
+  .fc-actions{flex-wrap:nowrap;gap:6px;margin-top:10px}
+  .fc-tags{gap:4px;margin-top:4px}
+  .tag{font-size:10px;padding:2px 7px}
   .review-card{padding:14px 12px}
-  .review-question{font-size:14px}
+  .review-question{font-size:15px}
   .modal{padding:16px 14px;width:96%;max-height:92vh;border-radius:12px}
   .modal-header h2{font-size:16px}
   .toast{bottom:72px;right:12px;left:12px;text-align:center}
-  .btn{padding:7px 12px;font-size:13px}
+  .btn{padding:7px 14px;font-size:13px}
   .btn-sm{padding:5px 10px;font-size:11px}
-  .filter-bar{gap:5px}
-  .filter-btn{padding:4px 10px;font-size:11px}
+  .filter-bar{gap:6px;flex-wrap:nowrap;overflow-x:auto;padding-bottom:4px;-webkit-overflow-scrolling:touch;margin-bottom:12px}
+  .filter-btn{padding:4px 12px;font-size:11px;white-space:nowrap;flex-shrink:0}
   .stat-card{padding:10px 8px}
   .stat-num{font-size:22px}
   .q-card{padding:12px}
   .q-body{font-size:13px}
-  .katex{font-size:.88em!important}
-  .katex-display{margin:.5em 0!important}
+  .katex{font-size:1em!important}
+  .katex-display{margin:.6em 0!important;overflow-x:auto}
   .mobile-nav-item{padding:5px 8px;min-width:48px;font-size:10px}
   .mobile-nav-item .mn-icon{font-size:18px}
+  .section-title{font-size:15px;margin-bottom:10px}
+  .cat-card.main-cat .cat-name{font-size:12px}
 }
 </style>
 </head>
